@@ -26,6 +26,7 @@ final class AutoLoader
 			throw new \Exception(' Document Root not set! ');
 		}
 		$class = @str_replace("\\",DIRECTORY_SEPARATOR,$class);
+
 		$file = $this->documentRoot.DIRECTORY_SEPARATOR.$class.'.php';
 
 		if ($file !== null && !empty($file) && file_exists($file)) {
