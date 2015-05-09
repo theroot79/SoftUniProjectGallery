@@ -2,12 +2,18 @@
 
 namespace VTF\Sessions;
 
-class NativeSessions implements ISession
+/**
+ * Implementation of native session support
+ *
+ * Class NativeSessions
+ * @package VTF\Sessions
+ */
+class NativeSession implements ISession
 {
 
 	public function __construct($name, $lifetime = 3600, $path = null, $domain = null, $secure = false)
 	{
-		if(empty($name)){
+		if (empty($name)) {
 			$name = '_sess';
 		}
 
@@ -33,6 +39,7 @@ class NativeSessions implements ISession
 
 	public function __get($name)
 	{
+		if (!isset($_SESSION[$name])) $_SESSION[$name] = null;
 		return $_SESSION[$name];
 	}
 

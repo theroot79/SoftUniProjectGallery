@@ -5,17 +5,14 @@ namespace Controllers;
 
 class Index
 {
-
-	public function __construct()
-	{
-		print 'I am the Index';
-
-	}
-
 	public function index(){
 
-		print 'I am the Index method of the Index controller.';
-
+		$view = \VTF\View::getInstance();
+		$view->title = 'Test';
+		$view->appendToLayout('header','header');
+		$view->appendToLayout('body','index');
+		$view->appendToLayout('footer','footer');
+		$view->display('layouts/default');
 	}
 
 }

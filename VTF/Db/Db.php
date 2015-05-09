@@ -1,10 +1,13 @@
 <?php
 
-
 namespace VTF\Db;
 
 use VTF\App;
 
+/**
+ * Class Db
+ * @package VTF\Db
+ */
 class Db
 {
 	protected $connection = 'default';
@@ -13,21 +16,21 @@ class Db
 	private $params = array();
 	private $sql;
 
-	public function __construct ($connection = null){
+	public function __construct($connection = null){
 
 		if($connection instanceof \PDO){
 			$this->db = $connection;
-		}else if($connection !== null){
+		}else if($connection != null){
 			$this->db = App::getInstance()->getDbConnection($connection);
 			$this->connection = $connection;
 		}else{
 			$this->db = App::getInstance()->getDbConnection($this->connection);
 		}
-
 	}
 
 	public function prepare($sql, $params = array(), $pdoOptions = array())
 	{
+
 		$this->statement = $this->db->prepare($sql, $pdoOptions);
 		$this->params = $params;
 		$this->sql = $sql;
@@ -36,9 +39,10 @@ class Db
 
 	public function execute($params = array())
 	{
-		if($params != null && is_array($params)){
+		if($params != null && is_array($params) && count($params) > 0){
 			$this->params = $params;
 		}
+
 		$this->statement->execute($this->params);
 		return $this;
 	}
@@ -77,8 +81,4 @@ class Db
 	{
 		return $this->statement;
 	}
-}
-
-class test extends Db{
-	protected $connection = 'backup';
 }
