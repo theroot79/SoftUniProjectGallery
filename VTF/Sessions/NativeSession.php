@@ -32,6 +32,11 @@ class NativeSession implements ISession
 		session_write_close();
 	}
 
+	public function saveSession()
+	{
+		session_write_close();
+	}
+
 	public function destroySessionId()
 	{
 		session_destroy();

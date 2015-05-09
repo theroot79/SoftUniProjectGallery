@@ -10,32 +10,56 @@ namespace VTF;
  */
 class FrontController
 {
+	/**
+	 * @var \VTF\FrontController
+	 */
 	private static $_instance = null;
+
+	/**
+	 * @var string
+	 */
 	public $ns = null;
+
+	/**
+	 * @var \VTF\Routers\IRouter
+	 */
 	public $controller = null;
+
+	/**
+	 * @var null
+	 */
 	public $method = null;
+
+	/**
+	 * @var \VTF\Routers\IRouter
+	 */
 	private $router = null;
 
-	public function setRouter (Routers\IRouter $router)
+	/**
+	 * Sets the router
+	 *
+	 * @param Routers\IRouter $router
+	 */
+	public function setRouter(Routers\IRouter $router)
 	{
 		$this->router = $router;
 	}
 
-	public function getRouter ()
+	public function getRouter()
 	{
 		return $this->router;
 	}
-
 
 	/**
 	 * Dispatch method.
 	 */
 	public function dispatch()
 	{
-		if($this->router == null)
-		{
-			throw new \Exception('Set router first !');
+		if ($this->router == null) {
+			throw new \Exception('Set router first !', 500);
 		}
+
+		$inputInst = InputData::getInstance();
 
 		$_url = $this->router->getURI();
 
@@ -44,92 +68,91 @@ class FrontController
 		$configObj = App::getInstance()->getConfig();
 		$routes = $configObj->routes;
 
-		$urlBase = @explode(DIRECTORY_SEPARATOR,$_url);
+		$urlBase = @explode(DIRECTORY_SEPARATOR, $_url);
 		$userSetController = null;
 
-		if($routes !== null && is_array($routes) && count($routes) > 0){
-			if(isset($urlBase[0]) && !empty($urlBase[0])) {
+		if ($routes !== null && is_array($routes) && count($routes) > 0) {
+			if (isset($urlBase[0]) && !empty($urlBase[0])) {
 				foreach ($routes as $k => $route) {
 					if ($urlBase[0] == $k) {
 						@array_shift($urlBase);
 						$this->ns = $route['namespace'];
-						if(isset($route['controller'])){
+						if (isset($route['controller'])) {
 							$userSetController = $route['controller'];
 						}
 						break;
 					}
 				}
 			}
-		}else{
-			//TODO: error handler
-			throw new \Exception('Routes Config file not found');
+		} else {
+			throw new \Exception('Routes Config file not found', 500);
 		}
 
-		if($this->ns == null && isset($routes['*']['namespace'])){
+		if ($this->ns == null && isset($routes['*']['namespace'])) {
 			$this->ns = $routes['*']['namespace'];
-			if(isset($routes['*']['controller']))$userSetController = $routes['*']['controller'];
-		}else if(!isset($routes['*']['namespace'])){
-			//TODO handle Errors.
-			throw new \Exception('Default Routes missing!');
+			if (isset($routes['*']['controller'])) $userSetController = $routes['*']['controller'];
+		} else if (!isset($routes['*']['namespace'])) {
+			throw new \Exception('Default Routes missing!', 500);
 		}
 
 
-		if(isset($urlBase[0]) && !empty($urlBase[0]) ){
+		if (isset($urlBase[0]) && !empty($urlBase[0])) {
 			$this->controller = strtolower($urlBase[0]);
-			if(isset($urlBase[1]) && !empty($urlBase[1])){
+			if (isset($urlBase[1]) && !empty($urlBase[1])) {
 				$this->method = strtolower($urlBase[1]);
-			}else{
+				$inputInst->setGet(array_values($urlBase[2]));
+			} else {
 				$this->method = $this->getDefaultMethod();
 			}
-		}else{
+		} else {
 			$this->controller = $this->getDefaultController();
 			$this->method = $this->getDefaultMethod();
 		}
 
-		if($userSetController != null){
-			if(isset($userSetController[$this->controller]['method'][$this->method])){
+		if ($userSetController != null) {
+			if (isset($userSetController[$this->controller]['method'][$this->method])) {
 				$this->method = strtolower($userSetController[$this->controller]['method'][$this->method]);
 			}
 
-			if(isset($userSetController[$this->controller]['changeto']))
+			if (isset($userSetController[$this->controller]['changeto']))
 				$this->controller = strtolower($userSetController[$this->controller]['changeto']);
 
 		}
 
+		$inputInst->setPost($this->router->getPost());
+
 		$callController = null;
 		$callMethod = null;
-		$controllerToLoad = $this->ns.'\\'.ucfirst($this->controller);
+		$controllerToLoad = $this->ns . '\\' . ucfirst($this->controller);
 
-		if(class_exists($controllerToLoad)) {
+		if (class_exists($controllerToLoad)) {
 			$callController = new $controllerToLoad();
-		}else{
-			//TODO handle Errors.
-			throw new \Exception('Missing Controller');
+		} else {
+			throw new \Exception('Missing Controller', 400);
 		}
 
 
-		if($callController != null && method_exists($callController,$this->method)) {
+		if ($callController != null && method_exists($callController, $this->method)) {
 			$callMethod = $callController->{$this->method}();
-		}else{
-			//TODO handle Errors.
-			throw new \Exception('Method doesnt Exist yet');
+		} else {
+			throw new \Exception('Method doesnt Exist yet', 400);
 		}
 
 	}
 
-	public function getDefaultController ()
+	public function getDefaultController()
 	{
 		$config = App::getInstance()->getConfig();
-		if(isset($config->app['default_controller'])){
+		if (isset($config->app['default_controller'])) {
 			return strtolower($config->app['default_controller']);
 		}
 		return 'Index';
 	}
 
-	public function getDefaultMethod ()
+	public function getDefaultMethod()
 	{
 		$config = App::getInstance()->getConfig();
-		if(isset($config->app['default_method'])){
+		if (isset($config->app['default_method'])) {
 			return strtolower($config->app['default_method']);
 		}
 		return 'index';

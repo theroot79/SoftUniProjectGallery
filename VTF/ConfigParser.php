@@ -2,8 +2,6 @@
 
 namespace VTF;
 
-use VTF;
-
 /**
  * Parses a single config file.
  *
@@ -12,20 +10,31 @@ use VTF;
  */
 final class ConfigParser
 {
-	private static $_configFolder = 'config';
-	private $_configItems = array();
+	/**
+	 * @var \VTF\ConfigParser
+	 */
 	private static $_instance = null;
+
+	/**
+	 * @var string
+	 */
+	private static $_configFolder = 'config';
+
+	/**
+	 * @var array
+	 */
+	private $_configItems = array();
 
 	public function includeConfigFile($path)
 	{
-		if ($path !== null){
+		if ($path !== null) {
 			$_file = @realpath($path);
-			if($_file != false && file_exists($_file) && is_readable($_file)) {
+			if ($_file != false && file_exists($_file) && is_readable($_file)) {
 				$_basename = explode('.php', basename($_file))[0];
 				$this->_configItems[$_basename] = include $_file;
-			}else{
+			} else {
 				//TODO: error handler
-				throw new \Exception('Config File not found ');
+				throw new \Exception('Config File not found ', 500);
 			}
 		}
 	}
@@ -39,9 +48,9 @@ final class ConfigParser
 	public function __get($name = 'filename')
 	{
 		if (!isset($this->_configItems[$name])) {
-			$this->includeConfigFile(self::$_configFolder.DIRECTORY_SEPARATOR.$name.'.php');
+			$this->includeConfigFile(self::$_configFolder . DIRECTORY_SEPARATOR . $name . '.php');
 		}
-		if (array_key_exists($name, $this->_configItems)){
+		if (array_key_exists($name, $this->_configItems)) {
 			return $this->_configItems[$name];
 		}
 		return '';

@@ -2,9 +2,9 @@
 
 namespace VTF\Db;
 
-use VTF\App;
-
 /**
+ * Database class
+ *
  * Class Db
  * @package VTF\Db
  */
@@ -16,15 +16,16 @@ class Db
 	private $params = array();
 	private $sql;
 
-	public function __construct($connection = null){
+	public function __construct($connection = null)
+	{
 
-		if($connection instanceof \PDO){
+		if ($connection instanceof \PDO) {
 			$this->db = $connection;
-		}else if($connection != null){
-			$this->db = App::getInstance()->getDbConnection($connection);
+		} else if ($connection != null) {
+			$this->db = \VTF\App::getInstance()->getDbConnection($connection);
 			$this->connection = $connection;
-		}else{
-			$this->db = App::getInstance()->getDbConnection($this->connection);
+		} else {
+			$this->db = \VTF\App::getInstance()->getDbConnection($this->connection);
 		}
 	}
 
@@ -39,7 +40,7 @@ class Db
 
 	public function execute($params = array())
 	{
-		if($params != null && is_array($params) && count($params) > 0){
+		if ($params != null && is_array($params) && count($params) > 0) {
 			$this->params = $params;
 		}
 
@@ -59,12 +60,12 @@ class Db
 
 	public function fetchColumn($column)
 	{
-		return $this->statement->fetchAll(\PDO::FETCH_COLUMN,$column);
+		return $this->statement->fetchAll(\PDO::FETCH_COLUMN, $column);
 	}
 
 	public function fetchRowColumn($column)
 	{
-		return $this->statement->fetch(\PDO::FETCH_BOUND,$column);
+		return $this->statement->fetch(\PDO::FETCH_BOUND, $column);
 	}
 
 	public function getAffectedRows()

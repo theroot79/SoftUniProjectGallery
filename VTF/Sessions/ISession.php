@@ -8,6 +8,8 @@ interface ISession
 
 	public function saveSessionId();
 
+	public function saveSession();
+
 	public function destroySessionId();
 
 	public function __get($name);

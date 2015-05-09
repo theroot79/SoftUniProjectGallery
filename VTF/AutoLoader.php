@@ -23,7 +23,7 @@ final class AutoLoader
 	public function loadClass($class)
 	{
 		if(empty($this->documentRoot)){
-			throw new \Exception(' Document Root not set! ');
+			throw new \Exception(' Document Root not set! ', 500);
 		}
 		$class = @str_replace("\\",DIRECTORY_SEPARATOR,$class);
 
@@ -32,8 +32,7 @@ final class AutoLoader
 		if ($file !== null && !empty($file) && file_exists($file)) {
 			require $file;
 		}else{
-			throw new \Exception(' File / Class : ' . $file .' not found !');
-			//TODO handle Errors.
+			throw new \Exception(' File / Class : ' . $file .' not found !', 500);
 		}
 
 		return true;
@@ -42,7 +41,7 @@ final class AutoLoader
 	/**
 	 * Registers this instance as an autoloader.
 	 *
-	 * @param $documentRoot
+	 * @param $documentRoot string
 	 */
 	public function register($documentRoot = '')
 	{

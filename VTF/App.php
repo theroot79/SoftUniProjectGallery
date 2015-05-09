@@ -2,8 +2,6 @@
 
 namespace VTF;
 
-use VTF;
-
 /**
  * <h1> Framework application by Vasil Tsitsev / http://tsintsev.com
  * Class FrameWorkApp
@@ -14,28 +12,57 @@ use VTF;
  */
 class App
 {
+	/**
+	 * @var \VTF\App
+	 */
 	private static $_instance = null;
-	private static $_config = null;
-	private $_frontController = null;
-	public static $sitepath = '';
-	private $_router = null;
-	private $_session = null;
-	public $_dbConnections = array();
 
-	public function setUp()
+	/**
+	 * @var \VTF\ConfigParser
+	 */
+	private $_config = null;
+
+	/**
+	 * @var \VTF\FrontController
+	 */
+	private $_frontController = null;
+
+	/**
+	 * @var string
+	 */
+	public static $sitepath = '';
+
+	/**
+	 * @var \VTF\Routers\IRouter
+	 */
+	private $_router = null;
+
+	/**
+	 * @var \VTF\Sessions\ISession
+	 */
+	private $_session;
+
+	/**
+	 * @var \VTF\Db\Db
+	 */
+	public $db = array();
+
+	public function __construct()
 	{
-		if(defined('SITE_PATH')){
+		set_exception_handler(array($this, '_exceptionHandler'));
+
+		if (defined('SITE_PATH')) {
 			self::$sitepath = SITE_PATH;
-		}else{
+		} else {
 			self::$sitepath =
-				@realpath(dirname($_SERVER['SCRIPT_FILENAME']).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR);
+				@realpath(dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR);
 		}
 
 		require 'AutoLoader.php';
 		$loader = new AutoLoader();
 		$loader->register(self::$sitepath);
 
-		self::$_config = ConfigParser::getInstance(self::$sitepath.DIRECTORY_SEPARATOR.'config');
+		$this->_config = ConfigParser::getInstance(self::$sitepath . DIRECTORY_SEPARATOR . 'config');
 	}
 
 	/**
@@ -45,28 +72,31 @@ class App
 	 */
 	public function run()
 	{
+		$this->setRouter();
+
+		$this->db = new Db\Db();
+
 		$this->_frontController = FrontController::getInstance();
 
-		if($this->_router instanceof Routers\IRouter) {
+		if ($this->_router instanceof Routers\IRouter) {
 			$this->_frontController->setRouter($this->_router);
-		}else{
+		} else {
 			if ($this->_router == 'jsonRPC') {
-				//TODO: some day.
 				$this->_frontController->setRouter(null);
 			} else {
 				$this->_frontController->setRouter(new Routers\DefaultRouter());
 			}
 		}
 
-		$s = $this->getConfig()->app['session'];
+		$s = $this->_config->app['session'];
 		$_s = null;
-		if($s['autostart'] == true){
-			if($s['type'] == 'native'){
-				$_s = new Sessions\NativeSession($s['name'],$s['lifetime'],$s['path'],$s['domain'],$s['secure']);
-			}else if($s['type'] == 'database'){
-				$_s = new Sessions\DBSession($s['db'],$s['name'],$s['dbtable'],$s['lifetime'],$s['path'],$s['domain'],$s['secure']);
-			}else{
-				throw new \Exception('Not implemented');
+		if ($s['autostart'] == true) {
+			if ($s['type'] == 'native') {
+				$_s = new Sessions\NativeSession($s['name'], $s['lifetime'], $s['path'], $s['domain'], $s['secure']);
+			} else if ($s['type'] == 'database') {
+				$_s = new Sessions\DBSession($s['db'], $s['name'], $s['dbtable'], $s['lifetime'], $s['path'], $s['domain'], $s['secure']);
+			} else {
+				throw new \Exception('Not implemented', 500);
 			}
 			$this->setSession($_s);
 		}
@@ -103,16 +133,16 @@ class App
 	 */
 	public function getDbConnection($connection = 'default')
 	{
-		if(empty($connection)){
-			throw new \Exception('Database profile not set.');
+		if (empty($connection)) {
+			throw new \Exception('Database profile not set.', 500);
 		}
-		if(isset($this->_dbConnections[$connection])){
+		if (isset($this->_dbConnections[$connection])) {
 			return $this->_dbConnections[$connection];
 		}
 
-		$_cnf = $this->getConfig()->db;
-		if(!isset($_cnf[$connection])){
-			throw new \Exception('Missing config for this database connection');
+		$_cnf = $this->_config->db;
+		if (!isset($_cnf[$connection])) {
+			throw new \Exception('Missing config for this database connection', 500);
 		}
 
 		$db = new \PDO($_cnf[$connection]['connection_url'],
@@ -131,7 +161,7 @@ class App
 	 */
 	public function getConfig()
 	{
-		return self::$_config;
+		return $this->_config;
 	}
 
 	/**
@@ -153,6 +183,7 @@ class App
 
 	/**
 	 * Main App Instance creator
+	 *
 	 * @return \VTF\App
 	 */
 	public static function getInstance()
@@ -164,8 +195,31 @@ class App
 		return self::$_instance;
 	}
 
-	public function __destruct(){
-		if($this->_session != null){
+	public function _exceptionHandler(\Exception $ex)
+	{
+		if ($this->_config !== null && isset($this->_config->app['displayExceptions']) &&
+			$this->_config->app['displayExceptions'] == true
+		) {
+			print '<pre>' . print_r($ex, true) . '</pre>';
+		} else {
+			$this->displayError($ex->getCode());
+		}
+	}
+
+	public function displayError($error = 500)
+	{
+		try {
+			$view = \VTF\View::getInstance();
+			$view->display('errors/' . $error);
+		} catch (\Exception $ex) {
+			Common::headerStatus($error);
+			exit('<h1>' . $error . '</h1>');
+		}
+	}
+
+	public function __destruct()
+	{
+		if ($this->_session != null && $this->_session instanceof Sessions\ISession) {
 			$this->_session->saveSession();
 		}
 	}

@@ -5,15 +5,12 @@ define('SITE_PATH',@realpath(substr(dirname($_SERVER['SCRIPT_FILENAME']), 0,
 
 require '..'.DIRECTORY_SEPARATOR.'VTF/App.php';
 
-$appIns = \VTF\App::getInstance();
-$appIns->setUp();
-$appIns->setRouter();
-$db = new \VTF\Db\Db();
-$appIns->run();
+$app = \VTF\App::getInstance();
+$app->run();
 
 
-$appIns->getSession()->counter += 1;
-echo $appIns->getSession()->counter;
+$app->getSession()->counter += 1;
+echo $app->getSession()->counter;
 
 
 print '<br/>OK';
