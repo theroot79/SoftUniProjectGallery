@@ -111,7 +111,8 @@ class View
 		if (count($this->_layoutComponents) > 0) {
 			foreach ($this->_layoutComponents as $k => $component) {
 				$fToInc = $this->_includeFile($component);
-				if ($fToInc !== null) {
+
+				if ($fToInc) {
 					$this->_layoutData[$k] = $fToInc;
 				}
 			}
@@ -122,6 +123,8 @@ class View
 		} else {
 			print $this->_includeFile($name);
 		}
+
+		return '';
 	}
 
 	private function _includeFile($file)
@@ -141,13 +144,26 @@ class View
 		}
 	}
 
-	public function getLayoutData($key)
+	/**
+	 * Prints components on the layout
+	 *
+	 * @param $key
+	 * @param int $print
+	 * @return mixed|string
+	 * @throws \Exception
+	 */
+	public function getLayoutData($key, $print = 0)
 	{
 		if (isset($this->_layoutData[$key])) {
-			return $this->_layoutData[$key];
+			if ($print == 0) {
+				print $this->_layoutData[$key];
+			} else {
+				return $this->_layoutData[$key];
+			}
 		} else {
 			throw new \Exception('There is no layout component: ' . $key . ' !', 400);
 		}
+		return true;
 	}
 
 	public function appendToLayout($key, $template)

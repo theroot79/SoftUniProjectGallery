@@ -32,7 +32,12 @@ final class AutoLoader
 		if ($file !== null && !empty($file) && file_exists($file)) {
 			require $file;
 		} else {
-			throw new \Exception(' File / Class : ' . $file . ' not found !', 500);
+			$fileIndex = $this->documentRoot . DIRECTORY_SEPARATOR .'Controllers'.DIRECTORY_SEPARATOR.'Index.php';
+			if(file_exists($fileIndex)){
+				require $fileIndex;
+			}else {
+				throw new \Exception(' File / Class : ' . $file . ' not found !', 500);
+			}
 		}
 
 		return true;

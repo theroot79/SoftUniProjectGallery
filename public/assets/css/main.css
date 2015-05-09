@@ -33,7 +33,7 @@ header{
 }
 #logoarea{
 	display:inline-block;	
-	padding:32px 5px 31px 35px;
+	padding:32px 5px 30px 35px;
 	box-sizing:border-box;		
 	float:left;
 }
@@ -135,7 +135,7 @@ header{
 }
 #menu #nav-menu li#profile-links ul li#nav-profile a,
 #menu #nav-menu li#profile-links ul li#nav-myalbums a{
-	line-height:1.5 !important;
+	line-height:1.6 !important;
 	color:#F16C65;
 	padding:6px;
 	font-size:0.85rem;
@@ -187,12 +187,13 @@ section.contentblock #paging a.sel{
 
 .errormsg{
 	padding:10px;
-	margin-bottom:10px;
 	color:red;
 	font-size:1.13em;
 	border:1px solid #FFFFFF !important;
+	background-color: #FFF;
 	border-radius:6px 6px 6px 6px;
 	text-align:left;
+	position: relative;
 }
 
 .backmsg{

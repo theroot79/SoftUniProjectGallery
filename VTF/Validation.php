@@ -30,6 +30,14 @@ class Validation
 	}
 
 	/**
+	 * Clears the rules
+	 */
+	public function clearRules()
+	{
+		$this->_rules = array();
+	}
+
+	/**
 	 * Main validate method, based on the list of rules - validates all items.
 	 *
 	 * @return bool
@@ -67,14 +75,19 @@ class Validation
 		return $val1 == $val2;
 	}
 
+	public static function alphabet($val)
+	{
+		return (bool) preg_match('/^[a-zа-Я]{1,1000}$/i', $val);
+	}
+
 	public static function alphanum($val)
 	{
-		return boolval(preg_match('/^(a-z0-9)+$/i', $val));
+		return (bool) preg_match('/^(a-z0-9)+$/i', $val);
 	}
 
 	public static function alphanumdash($val)
 	{
-		return boolval(preg_match('/^(-a-z0-9_-)+$/i', $val));
+		return (bool) preg_match('/^(-a-z0-9_-)+$/i', $val);
 	}
 
 	public static function numeric($val)

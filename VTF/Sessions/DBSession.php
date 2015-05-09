@@ -80,7 +80,7 @@ class DBSession extends \VTF\Db\Db implements ISession
 			$validuntil = (time() + $this->lifetime);
 			$this->prepare('UPDATE `' . $this->tableName . '` SET `sess_data`=?, `valid_until`=? WHERE `sessid`=? ',
 				array(serialize($this->sessionData), $validuntil, $this->sessionId))->execute();
-			setcookie($this->sessionName, $this->sessionId, $validuntil, $this->path, $this->domain, $this->secure, true);
+			@setcookie($this->sessionName, $this->sessionId, $validuntil, $this->path, $this->domain, $this->secure, true);
 		}
 	}
 

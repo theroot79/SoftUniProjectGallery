@@ -17,6 +17,11 @@ class DefaultController
 	public $app;
 
 	/**
+	 * @var \VTF\Db\Db
+	 */
+	public $db;
+
+	/**
 	 * @var \VTF\View
 	 */
 	public $view;
@@ -38,6 +43,7 @@ class DefaultController
 	public function __construct()
 	{
 		$this->app = App::getInstance();
+		$this->db = $this->app->_dbConnections;
 		$this->view = View::getInstance();
 		$this->config = $this->app->getConfig();
 		$this->input = InputData::getInstance();

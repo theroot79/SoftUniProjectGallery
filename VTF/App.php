@@ -45,7 +45,7 @@ class App
 	/**
 	 * @var \VTF\Db\Db
 	 */
-	public $db = array();
+	public $_dbConnections = array();
 
 	public function __construct()
 	{
@@ -74,7 +74,7 @@ class App
 	{
 		$this->setRouter();
 
-		$this->db = new Db\Db();
+		new Db\Db();
 
 		$this->_frontController = FrontController::getInstance();
 

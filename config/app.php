@@ -1,6 +1,7 @@
 <?php
 $app['default_controller'] = 'Index';
 $app['default_method'] = 'index';
+$app['displayExceptions'] = true;
 
 $app['session']['autostart'] = true;
 $app['session']['type'] = 'native';

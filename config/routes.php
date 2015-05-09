@@ -7,5 +7,6 @@ $routes['admin']['controller']['new']['method']['add'] = 'create';
 
 
 $routes['*']['namespace'] = 'Controllers';
+$routes['*']['controller']['gallery']['changeto'] = 'Index';
 
 return $routes;

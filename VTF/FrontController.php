@@ -123,19 +123,28 @@ class FrontController
 
 		$callController = null;
 		$callMethod = null;
+		$call404 = false;
 		$controllerToLoad = $this->ns . '\\' . ucfirst($this->controller);
 
 		if (class_exists($controllerToLoad)) {
 			$callController = new $controllerToLoad();
 		} else {
-			throw new \Exception('Missing Controller', 400);
+			if (class_exists('Controllers\Index')) {
+				$callController = new \Controllers\Index();
+				$call404 = true;
+			}else {
+				throw new \Exception('Missing Controller', 400);
+			}
 		}
 
-
-		if ($callController != null && method_exists($callController, $this->method)) {
-			$callMethod = $callController->{$this->method}();
-		} else {
-			throw new \Exception('Method doesnt Exist yet', 400);
+		if($call404 == false){
+			if ($callController != null && method_exists($callController, $this->method)) {
+				$callMethod = $callController->{$this->method}();
+			} else {
+				throw new \Exception('Method doesnt Exist yet', 400);
+			}
+		}else{
+			$callMethod = $callController->{'fnf404'}($controllerToLoad);
 		}
 
 	}

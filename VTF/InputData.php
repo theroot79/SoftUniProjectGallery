@@ -38,6 +38,18 @@ class InputData
 	}
 
 	/**
+	 * Checks if we have _POST request currently send.
+	 *
+	 * @return bool
+	 */
+	public function hasPostReques(){
+		if(isset($_POST) && !empty($_POST)){
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Sets _POST data.
 	 *
 	 * @param $post array

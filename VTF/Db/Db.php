@@ -8,13 +8,15 @@ namespace VTF\Db;
  * Class Db
  * @package VTF\Db
  */
-class Db
+class Db implements IDb
 {
 	protected $connection = 'default';
 	private $db = null;
 	private $statement = null;
 	private $params = array();
-	private $sql;
+	private $bindParams = array();
+	private $errors = array();
+	public $sql;
 
 	public function __construct($connection = null)
 	{
@@ -31,10 +33,11 @@ class Db
 
 	public function prepare($sql, $params = array(), $pdoOptions = array())
 	{
-
+		$this->errors = array();
 		$this->statement = $this->db->prepare($sql, $pdoOptions);
 		$this->params = $params;
 		$this->sql = $sql;
+		$this->bindParams = array();
 		return $this;
 	}
 
@@ -44,8 +47,26 @@ class Db
 			$this->params = $params;
 		}
 
-		$this->statement->execute($this->params);
-		return $this;
+		if(count($this->params) > 0){
+			try{
+				return $this->statement->execute($this->params);
+			}catch (\PDOException $ex){
+				if(isset($ex->errorInfo) && isset($ex->errorInfo[2])) $this->errors[] = $ex->errorInfo[2];
+			}
+		}else{
+			try{
+				return $this->statement->execute();
+			}catch (\PDOException $ex){
+				if(isset($ex->errorInfo) && isset($ex->errorInfo[2])) $this->errors[] = $ex->errorInfo[2];
+			}
+		}
+
+		return false;
+	}
+
+	public function bindParam($key, $value, $normalize = \PDO::PARAM_INT)
+	{
+		$this->statement->bindParam($key, $value, $normalize);
 	}
 
 	public function fetchAllAssoc()
@@ -81,5 +102,18 @@ class Db
 	public function getStatement()
 	{
 		return $this->statement;
+	}
+
+	public function clearStatement(){
+		$this->statement = null;
+	}
+
+	public function getErrors(){
+
+		$out = '';
+		foreach($this->errors as $error){
+			$out.= '<h3>'.$error.'</h3>';
+		}
+		return $out;
 	}
 }
