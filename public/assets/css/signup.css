@@ -1,0 +1,47 @@
+#signup{
+	width:930px;
+	min-height:200px;
+	padding:35px;
+	background-color:#F16C65;
+}
+
+/* ********************** REGISTRATION FORM ********************** */
+#register-form{
+	width:690px;
+	height:170px;
+	text-align:left;
+	float:left;
+}
+#register-form h1{
+	display:block;
+	width:100%;
+	line-height:1.1;
+	color:#FFF;
+	font-size:1.86em;
+	font-weight:normal;
+	text-align:left;
+}
+#register-form h1 strong{
+	font-weight:bold;
+}
+
+/* ********************** LOGIN FORM ********************** */
+
+#login-form{
+	display:block;
+	width:232px;
+	height:150px;
+	text-align:left;
+	float:right;
+}
+#login-form h2{
+	display:block;
+	width:100%;
+	line-height:1.1;
+	color:#FFF;
+	font-size:1.86em;
+	text-align:left;
+}
+#signup #login-form form p button{
+	float:right;
+}

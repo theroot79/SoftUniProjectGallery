@@ -1,0 +1,209 @@
+@charset "utf-8";
+html,body{width:100%;height:100%;}
+body{
+	min-width:960px;
+	position:relative;
+	background-color:#1B1F2E;
+	font:13px/18px "Calibri",Verdana,Arial,sans-serif;
+	color:#FFFFFF;
+}
+*,form{padding:0;margin:0;}
+img{margin-left:0;padding:0 !important;border:0;}
+div{display:block;}
+a{outline:none 0;outline-color: inherit;cursor:pointer;text-decoration:none;}
+a:hover{text-decoration:underline}
+.hide{display:none !important;}
+
+/* ********************** HEADER ***************************** */
+.admin-login-form{
+	display:block;
+	width:400px;
+	margin:30px auto;
+	float:none;
+}
+.admin-login-form h3,
+.admin-login-form h2{
+	padding-bottom:20px;
+}
+
+/* ********************** CONTENTS ***************************** */
+#admin-wrapper{
+	display:block;
+	width:100%;
+	min-width:960px;
+	min-height:300px;
+	float:left;
+}
+aside#menu{
+	display:block;
+	width:197px;
+	min-height:300px;
+	padding-left:10px;
+	padding-top:10px;
+	float:left;
+}
+aside#menu a{
+	display:block;
+	width:170px;
+	line-height:35px;
+	margin-bottom:10px;
+	padding-left:15px;
+	font-size: 1.13em;
+	color:#8088a3;
+	background-color:#2D2F3B;
+	border:1px solid #8088a3;
+	border-radius: 6px;
+	text-align:left;
+	text-decoration:none;
+	float:left;
+}
+aside#menu a:hover,
+aside#menu a.active{
+	color:#FFFFFF;
+}
+
+#admin-content{
+	display:block;
+	width:670px;
+	min-height:350px;
+	padding-left:10px;
+	padding-top:10px;
+	border-left:1px solid #8088a3;
+	float:left;
+}
+h1#admin-content-title{
+	display:block;
+	width:670px;
+	min-height:20px;
+	line-height:1.0;
+	border-bottom:1px solid #8088a3;
+	font-size:1.13em;
+	float:left;
+}
+#admin-content-in{
+	display:Block;
+	width:670px;
+	min-height:250px;
+	padding-top:10px;
+	float:left;
+}
+
+/* ********************** OTHER ***************************** */
+.done{
+	color:green;
+	font-weight:bold;
+	font-size:13px;
+}
+.formblk{
+	display:block;
+	width:100%;
+	min-height:40px;
+	padding-top:10px;
+	padding-bottom:10px;
+	float:left;
+}
+.formblk form p{
+	display:block;
+	width:100%;
+	padding-bottom:4px;
+	float:left;
+}
+.formblk form p label{
+	display:block;
+	width:40%;
+	padding-bottom:4px;
+	float:left;
+}
+.formblk form p input,
+.formblk form p textarea{
+	width:55% !important;
+}
+.btn{
+	width:auto;
+	padding-left:5px;
+	padding-right:5px;
+	padding-top:1px;
+	font-size:1em;
+	font-family:"Myriad Pro",Verdana,Arial,Sans-serif;
+	border:1px solid #474747;
+	border-radius:3px 3px 3px 3px;
+	background-color:#FFF;
+	box-shadow:1px 1px 1px #000;
+	text-align:center;
+	cursor:pointer;
+}
+.btn:hover{
+	color:#F16C65;
+}
+.btn:active{
+	box-shadow:inset 1px 1px 2px #838383;
+}
+.btngreen{
+	color:#FFF;
+	background-color:green;
+}
+.btngreen:hover{
+	color:#000;
+	background-color:green;
+}
+.btndel{
+	color:#FFF;
+	background-color:red;
+}
+.btndel:hover{
+	color:#000;
+	background-color:red;
+}
+
+.sel{
+	height:22px;
+	padding-top:1px;
+	padding-left:1px;
+	padding-right:1px;
+	margin-right:2px;
+	font-size:1em;
+	font-family:"Myriad Pro",Verdana,Arial,Sans-serif;
+	border:1px solid #474747;
+	border-radius:3px 3px 3px 3px;
+	box-shadow:inset 1px 1px 2px #838383;
+	cursor:pointer;
+}
+.inp{
+	padding:2px 3px;
+	margin-right:2px;
+	font-size:1em;
+	font-family:"Myriad Pro",Verdana,Arial,Sans-serif;
+	border:1px solid #474747;
+	border-radius:3px 3px 3px 3px;
+	box-shadow:inset 1px 1px 1px #838383;
+}
+
+.statusline{
+	display:block;
+	width:100%;
+	min-height:22px;
+	line-height:22px;
+	background: #FFF no-repeat 2px 4px;
+	float:left;
+}
+
+/* *********************** USERS ADMINISTRATON **************************** */
+
+#userslist{
+	width:100%;
+	border-collapse: collapse;
+}
+#userslist th{
+	padding-left:10px;
+	text-align:left;
+}
+#userslist td{
+	padding:1px;
+	padding-left:10px;
+	text-align:left;
+}
+#userslist td input[type=checkbox]{
+	cursor:pointer;
+	width:15px;
+	height:15px;
+}
