@@ -8,9 +8,5 @@ require '..'.DIRECTORY_SEPARATOR.'VTF/App.php';
 $app = \VTF\App::getInstance();
 $app->run();
 
-
-$app->getSession()->counter += 1;
-echo $app->getSession()->counter;
-
-
-print '<br/>OK';
+//$app->getSession()->counter += 1;
+//echo $app->getSession()->counter;

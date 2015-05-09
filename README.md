@@ -1,4 +1,4 @@
-# SoftUniProjectGallery
+# ProjectGallery
 Framework Project Gallery
 
 -------------------------------

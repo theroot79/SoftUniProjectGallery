@@ -22,17 +22,17 @@ final class AutoLoader
 	 */
 	public function loadClass($class)
 	{
-		if(empty($this->documentRoot)){
+		if (empty($this->documentRoot)) {
 			throw new \Exception(' Document Root not set! ', 500);
 		}
-		$class = @str_replace("\\",DIRECTORY_SEPARATOR,$class);
+		$class = @str_replace("\\", DIRECTORY_SEPARATOR, $class);
 
-		$file = $this->documentRoot.DIRECTORY_SEPARATOR.$class.'.php';
+		$file = $this->documentRoot . DIRECTORY_SEPARATOR . $class . '.php';
 
 		if ($file !== null && !empty($file) && file_exists($file)) {
 			require $file;
-		}else{
-			throw new \Exception(' File / Class : ' . $file .' not found !', 500);
+		} else {
+			throw new \Exception(' File / Class : ' . $file . ' not found !', 500);
 		}
 
 		return true;

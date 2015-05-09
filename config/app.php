@@ -1,10 +1,9 @@
 <?php
-
 $app['default_controller'] = 'Index';
 $app['default_method'] = 'index';
 
 $app['session']['autostart'] = true;
-$app['session']['type'] = 'database';
+$app['session']['type'] = 'native';
 $app['session']['name'] = '_sess';
 $app['session']['lifetime'] = 3600;
 $app['session']['path'] = '/';
