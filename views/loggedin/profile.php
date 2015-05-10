@@ -18,5 +18,10 @@
 	</div>
 	<div id="profile-form-logout">
 		<a href="/logout/">Logout</a>
+		<?php
+		if($this->user['role'] == 'admin'){
+			print '<a href="/admin/">Administration</a>';
+		}
+		?>
 	</div>
 </div>

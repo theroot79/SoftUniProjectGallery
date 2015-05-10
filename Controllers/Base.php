@@ -37,16 +37,47 @@ class Base extends DefaultController{
 	public $notices = '';
 
 	/**
-	 * App instanse
+	 * Input Data
 	 *
 	 * @var \VTF\InputData
 	 */
 	public $input;
 
 
+	/**
+	 * App instanse
+	 *
+	 * @var App
+	 */
 	public $app;
 
+	/**
+	 * Auth module
+	 *
+	 * @var Auth|null
+	 */
 	public $auth;
+
+	/**
+	 * Total Items Found
+	 *
+	 * @var int $total
+	 */
+	public $total = 0;
+
+	/**
+	 * Current page
+	 *
+	 * @var int $page
+	 */
+	public $page = 0;
+
+	/**
+	 * Items per page
+	 *
+	 * @var int $offset
+	 */
+	public $offset = 8;
 
 	public function __construct()
 	{
@@ -66,6 +97,7 @@ class Base extends DefaultController{
 
 
 		$this->view->appendToLayout('header','header');
+		$this->view->appendToLayout('header-admin','header-admin');
 		$this->view->appendToLayout('footer','footer');
 	}
 
@@ -84,6 +116,17 @@ class Base extends DefaultController{
 		$user = $this->auth->user();
 		$userid = 0;
 		if(isset($user['uid'])){
+			$userid = intval($user['uid']);
+		}
+		if($userid < 1)header("Location:/signup/");
+		return $userid;
+	}
+
+	public function requireAdmin()
+	{
+		$user = $this->auth->user();
+		$userid = 0;
+		if(isset($user['uid']) && $user['role'] == 'admin'){
 			$userid = intval($user['uid']);
 		}
 		if($userid < 1)header("Location:/signup/");

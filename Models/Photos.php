@@ -18,13 +18,17 @@ class Photos extends Main
 	/**
 	 * Get a list of the most recent Photos
 	 *
-	 * @return Array|bool
+	 * @param int $page
+	 * @param int $offset
+	 * @return bool
 	 */
-	public function getLatestPhotos()
+	public function getLatestPhotos($page = 0, $offset = 8)
 	{
-		$q = $this->prepare("SELECT * FROM `photos` ORDER BY `phid` DESC LIMIT :page, :offset ");
-		$q->bindParam(':page', $this->getPage());
-		$q->bindParam(':offset',$this::resultsPerPage);
+		$q = $this->prepare("SELECT *,
+			IFNULL((SELECT `name` FROM `albums` WHERE `photos`.`aid`=`albums`.`aid` LIMIT 1),'') AS `album`
+				FROM `photos` ORDER BY `phid` DESC LIMIT :page, :offset ");
+		$q->bindParam(':page',$page);
+		$q->bindParam(':offset',$offset);
 		$q->execute();
 
 		$result = $q->fetchAllAssoc();
@@ -35,6 +39,26 @@ class Photos extends Main
 
 		return false;
 	}
+
+	/**
+	 * Get photo data.
+	 *
+	 * @param int $phid
+	 * @return bool
+	 */
+	public function getPhotoById($phid)
+	{
+		$q = $this->prepare("SELECT * FROM `photos` WHERE `phid` = :phid");
+		$q->bindParam(':phid', $phid);
+		$q->execute();
+		$result = $q->fetchAllAssoc();
+		if(count($result) > 0){
+			return $result[0];
+		}
+
+		return false;
+	}
+
 
 	/**
 	 * Get a list of photos based on album ID

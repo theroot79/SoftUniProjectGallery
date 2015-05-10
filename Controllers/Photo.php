@@ -13,17 +13,24 @@ class Photo extends Base
 
 	public function view(){
 
-		$albumId = 0;
+		$albumId = 0;$photoId = 0;
 		if($this->input->get(0) && is_numeric($this->input->get(0))){
-			$albumId = $this->input->get(0);
+			$photoId = $this->input->get(0);
 		}else{
 			@header("Location:/");
 		}
 
-		$dataAlbums = new Models\Albums();
 		$dataPhotos = new Models\Photos();
+		$dataAlbums = new Models\Albums();
 		$dataComments = new Models\Comments();
-		$dataVotes = new Models\Votes();
+
+		$this->view->photo = $dataPhotos->getPhotoById($photoId);
+		$albumId = $this->view->photo['aid'];
+
+		$this->view->pageTitle = 'Photo '.$this->view->photo['name'];
+
+		$this->view->album = $dataAlbums->getAlbumData($albumId);
+
 
 		/**
 		 * Actions -->
@@ -51,7 +58,7 @@ class Photo extends Base
 
 				if($validName == true && $validComment == true) {
 
-					$u = $dataComments->addComments($albumId,0,$name, $comment);
+					$u = $dataComments->addComments($albumId,$photoId,$name, $comment);
 
 					if ($u != false && ($u > 0)) {
 						$this->AddNoticeMessage('Comment added !');
@@ -70,10 +77,7 @@ class Photo extends Base
 		 * <-- End of actions
 		 */
 
-		$this->view->album = $dataAlbums->getAlbumData($albumId);
-		$this->view->pageTitle = 'Album '.$this->view->album['name'];
-		$this->view->photos = $dataPhotos->getPhotosByAlbum($albumId);
-		$this->view->comments = $dataComments->getComments($albumId);
+		$this->view->comments = $dataComments->getComments($albumId, $photoId);
 		$this->view->appendToLayout('body','photo');
 
 		$this->view->display('layouts/default',

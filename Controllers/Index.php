@@ -11,20 +11,21 @@ class Index extends Base
 {
 	public function index(){
 
-		$data = new Models\Photos();
+		$dataPhotos = new Models\Photos();
+		$dataAlbums = new Models\Albums();
 
-		$this->totalPhotos = $data->getTotalPhotos();
+		$this->view->pageTitle = 'Vasil Tsintsev&lsquo;s Gallery';
 
-		$view = View::getInstance();
-		$view->title = 'Vasil Tsintsev&lsquo;s Gallery';
-		$view->searchString = '';
-		$view->latestPhotos = $data->getLatestPhotos();
+		$this->view->albums = $dataAlbums->getLatestAlbums();
+		$this->view->photos = $dataPhotos->getLatestPhotos();
 
 
-		$view->appendToLayout('body','index');
-		$view->display('layouts/default',
+		$this->view->appendToLayout('body','index');
+		$this->view->display('layouts/default',
 			array('menuName'=>'singup','errors' => $this->errors));
 	}
+
+
 
 	public function fnf404($ctrl){
 

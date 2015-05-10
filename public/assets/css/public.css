@@ -117,33 +117,16 @@
 #view-photo-blk{
 	margin-left:2rem;
 	width:930px;
-	height:605px;
+	height:700px;
 	background-color:#CFCFD4;
 }
 
-#view-photo-blk a{
-	display:block;
-	width:63px;
-	height:588px;
-	background-color:#CFCFD4;
-}
-
-#p-photos-block-arr-left{
-	background:#CFCFD4 url(/assets/img/big_arr_left.jpg) no-repeat center center;
-	float:left;
-}
 
 #view-photo-blk img{
 	display:block;
-	width:784px;
-	height:588px;
+	width:915px;
 	border:8px solid #B6B7BF;
 	float:left;
-}
-
-#p-photos-block-arr-right{
-	background:#CFCFD4 url(/assets/img/big_arr_right.jpg) no-repeat center center;
-	float:right;
 }
 
 h2#p-photo-name{

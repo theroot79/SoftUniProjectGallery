@@ -5,7 +5,7 @@ $url = urldecode('http://'.$_SERVER['HTTP_HOST'].'/');
 	<div id="copyright">
 		<p>
 			All rights reserved &copy; <?php print date('Y'); ?> &middot;
-			<a href="http://softuni.bg" target="_blank">theroot79@SoftUni</a> &middot;
+			<a href="http://softuni.bg" target="_blank">the_root79@SoftUni</a> &middot;
 			<a href="http://validator.w3.org/check?verbose=1&amp;uri=<?php print $url;?>" target="_blank">HTML5</a> &amp;
 			<a href="http://jigsaw.w3.org/css-validator/validator?profile=css3&amp;warning=0&amp;uri=<?php print $url;?>" target="_blank">CSS3</a> validated
 		</p>

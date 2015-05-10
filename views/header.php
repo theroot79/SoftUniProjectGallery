@@ -5,7 +5,7 @@
 	<div id="header-area-right">
 		<nav id="menu">
 			<ul id="nav-menu">
-				<li id="nav-photos" <?php if($this->menuName == 'photos') print 'class="active"';?>><a href="/gallery/">Photos</a></li>
+				<li id="nav-photos" <?php if($this->menuName == 'photos') print 'class="active"';?>><a href="/gallery/view/">Photos</a></li>
 				<li id="nav-albums" <?php if($this->menuName == 'albums') print 'class="active"';?>><a href="/albums/">Albums</a></li>
 				<li id="nav-categories" <?php if($this->menuName == 'categories') print 'class="active"';?>><a href="/categories/">By Category</a></li>
 
@@ -31,7 +31,7 @@
 		</nav>
 		<div id="search-form">
 			<form method="post" action="/search/">
-				<input type="text" name="search" placeholder="Photos / Albums" id="search-area"
+				<input type="text" name="search" placeholder="Search for Albums" id="search-area"
 				       value="<?php print $this->searchString; ?>" required="required" maxlength="150"/>
 				<button type="submit" name="submit"></button>
 			</form>

@@ -44,7 +44,19 @@ class Myphotos extends Base
 				$validate->setRule('minlength',$photoName,2,'minlength');
 				$validPhotoName = $validate->validate();
 
-				if($validPhotoName == true){
+				$validFile = false;
+
+				$file = $_FILES['file']['tmp_name'];
+				$filesize = filesize($_FILES['file']['tmp_name']);
+				list($width, $height, $type)=getimagesize($file);
+
+				if($type > 0 && $type < 4){
+					if($filesize < 5557626){
+						$validFile = true;
+					}
+				}
+
+				if($validPhotoName == true && $validFile == true){
 
 					$a = $dataPhotos->addPhoto($userid, $albumId, $photoName, $_FILES);
 					if ($a != false && is_numeric($a)) {
@@ -54,7 +66,8 @@ class Myphotos extends Base
 					}
 
 				}else{
-					$this->AddErrorMessage('Add valid Photo name ! Must be a word, no special symbols and number.');
+					if($validFile == false)$this->AddErrorMessage('Add valid Image file, must be JPEG,GIF,PNG');
+					if($validPhotoName == false)$this->AddErrorMessage('Add valid Photo name ! Must be a word, no special symbols and number.');
 				}
 			}
 		}
