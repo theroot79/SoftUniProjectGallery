@@ -8,7 +8,10 @@
 		if($this->photos && is_array($this->photos) && count($this->photos) > 0) {
 			$n = 0;
 			foreach ($this->photos as $photo) {
-				print '<img src="/photos/' . $photo['uid'] . '/t_' . $photo['filename'] . '" alt="' . $photo['name'] . '"/>';
+				print '
+				<a href="/photo/view/' . $photo['phid'] . '">
+					<img src="/photos/' . $photo['uid'] . '/t_' . $photo['filename'] . '" alt="' . $photo['name'] . '"/>
+				</a>';
 				$n++;
 				if($n > 3) break;
 			}

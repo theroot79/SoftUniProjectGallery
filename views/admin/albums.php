@@ -8,6 +8,7 @@
 			<tr>
 				<th>Album ID:</th>
 				<th>Name:</th>
+				<th>Category:</th>
 				<th>By User:</th>
 				<th>Action</th>
 			</tr>';
@@ -16,7 +17,16 @@
 			print '
 			<tr>
 				<td>'.$album['aid'].'</td>
-				<td>'.$album['name'].'</td>
+				<td>
+					<form method="post">
+						<input type="text" name="name" value="'.$album['name'].'" required="required"/>
+						<button type="submit" name="action" value="editname">EDIT</button>
+						<input type="hidden" name="albumid" value="'.$album['aid'].'"/>
+						<input type="hidden" name="oldname" value="'.$album['name'].'"/>
+						<input type="hidden" name="cat" value="'.$album['cid'].'"/>
+					</form>
+				</td>
+				<td>'.$album['category'].'</td>
 				<td>'.$album['user'].'</td>
 				<td>
 					<a href="/admin/albums/del/'.$album['aid'].'">Delete</a>

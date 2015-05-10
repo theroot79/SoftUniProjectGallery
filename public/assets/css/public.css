@@ -290,6 +290,7 @@ div.albums-likes strong.dislikesnum{
 #view-album-blk{
 	display:block;
 	width:auto;
+	padding-bottom:20px;
 	background-color:#FFF;
 	display:-webkit-flex;
 	display:flex;

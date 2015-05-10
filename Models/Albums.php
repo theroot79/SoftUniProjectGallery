@@ -47,7 +47,9 @@ class Albums extends Main
 		                	AS `comments`,
 					 IFNULL(
 		                (SELECT CONCAT(`fname`,' ' ,`lname`) FROM `users` WHERE `albums`.`uid`=`users`.`uid`),'')
-		                	AS `user`
+		                	AS `user`,
+		             IFNULL(
+		                (SELECT `name` FROM `categories` WHERE `albums`.`cid`=`categories`.`cid`),'') AS `category`
 						FROM `albums` {$where} ORDER BY `alllikes` DESC,`alldislikes` ASC,`comments`
 							DESC LIMIT :page, :offset ";
 

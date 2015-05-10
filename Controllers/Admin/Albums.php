@@ -39,6 +39,31 @@ class Albums extends \Controllers\Base
 					$this->AddErrorMessage('Add valid Album name ! Must be a word, no special symbols and number.');
 				}
 			}
+
+			if ($this->input->post('action') == 'editname') {
+
+				$albumName = $this->input->post('name');
+				$albumOldName = $this->input->post('oldname');
+				$albumId = $this->input->post('albumid');
+				$catId = $this->input->post('cat');
+
+				$validate->setRule('alphabetspace', $albumName);
+				$validate->setRule('minlength', $albumName, 2, 'minlength');
+				$validAlbumName = $validate->validate();
+
+				if ($validAlbumName == true) {
+
+					$a = $dataAlbums->editAlbum($albumId,$catId,$albumName,$albumOldName);
+					if ($a != false && is_numeric($a)) {
+						$this->AddNoticeMessage('Album - updated!');
+					} else {
+						$this->AddErrorMessage('Failed to add album, maybe already exist!');
+					}
+
+				} else {
+					$this->AddErrorMessage('Add valid Album name ! Must be a word, no special symbols and number.');
+				}
+			}
 		}
 
 		$this->view->albums = $dataAlbums->getLatestAlbums();

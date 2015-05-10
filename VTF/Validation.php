@@ -77,12 +77,12 @@ class Validation
 
 	public static function alphabet($val)
 	{
-		return (bool) preg_match('/^[a-zа-Я]{1,1000}$/i', $val);
+		return (bool) preg_match('/^[a-zA-Z\p{Cyrillic}]{1,1000}$/u', $val);
 	}
 
 	public static function alphabetspace($val)
 	{
-		return (bool) preg_match('/^[a-zа-Я\s]{1,1000}$/i', $val);
+		return (bool) preg_match('/^[a-zA-Z\p{Cyrillic}\s]{1,1000}$/u', $val);
 	}
 
 	public static function alphanum($val)
