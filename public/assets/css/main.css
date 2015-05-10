@@ -306,3 +306,26 @@ footer div#copyright p a{
 #media a.twitter:hover {
 	opacity:0.9;	
 }
+
+/* ************************* OTHERS ****************** */
+.admin-table{
+	display: block;
+	padding-top: 30px;
+}
+.admin-table select{
+	display: inline-block;
+	font-size:14px;
+	padding:4px;
+	cursor:pointer;
+}
+.admin-table input{
+	display: inline-block;
+	font-size:14px;
+	padding:4px;
+}
+.admin-table button{
+	display: inline-block;
+	padding:2px;
+	cursor:pointer;
+	font-size:12px;
+}

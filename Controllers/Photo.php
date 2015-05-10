@@ -53,7 +53,7 @@ class Photo extends Base
 				$validName = $validate->validate();
 
 				$validate->clearRules();
-				$validate->setRule('minlength',$comment,10,'minlength');
+				$validate->setRule('minlength',$comment,5,'minlength');
 				$validComment = $validate->validate();
 
 				if($validName == true && $validComment == true) {

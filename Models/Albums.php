@@ -44,7 +44,10 @@ class Albums extends Main
 		                	AS `alldislikes`,
 		             IFNULL(
 		                (SELECT COUNT(`cid`) as `comments` FROM `comments` WHERE `comments`.`aid`=`albums`.`aid`),'0')
-		                	AS `comments`
+		                	AS `comments`,
+					 IFNULL(
+		                (SELECT CONCAT(`fname`,' ' ,`lname`) FROM `users` WHERE `albums`.`uid`=`users`.`uid`),'')
+		                	AS `user`
 						FROM `albums` {$where} ORDER BY `alllikes` DESC,`alldislikes` ASC,`comments`
 							DESC LIMIT :page, :offset ";
 
@@ -245,9 +248,29 @@ class Albums extends Main
 		}else{
 			$sql = "DELETE FROM `albums` WHERE `aid` = :aid AND `uid` = :uid";
 		}
+
 		$q = $this->prepare($sql);
 		$q->bindParam(':aid', $aid);
 		if($user['role'] != 'admin')$q->bindParam(':uid', $user['uid']);
+		$q->execute();
+		$result = $q->getAffectedRows();
+		if($result >= 0) {
+			return $result;
+		}else{
+			return false;
+		}
+	}
+
+	/**
+	 * Del album procedure from admin.
+	 *
+	 * @param int $aid
+	 * @return bool
+	 */
+	public function delAlbumByAdmin($aid = 0)
+	{
+		$q = $this->prepare("DELETE FROM `albums` WHERE `aid` = :aid");
+		$q->bindParam(':aid', $aid);
 		$q->execute();
 		$result = $q->getAffectedRows();
 		if($result >= 0) {

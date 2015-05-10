@@ -11,9 +11,11 @@
 
 	<div id="comment-block">
 		<h2 id="comment-block-title">Add Comments:</h2>
-		<form method="post" action="?#comment-block">
-			<p><input type="text" name="name" id="comment-uname" value="" placeholder="Your Name..." required="required"/></p>
-			<p><textarea name="comment" placeholder="Write a comment..." id="comment-text" required="required"></textarea></p>
+		<form method="post">
+			<p><input type="text" name="name" id="comment-uname" value="" placeholder="Your Name..." required="required"
+			          pattern=".{4,}"/></p>
+			<p><textarea name="comment" placeholder="Write a comment..." id="comment-text" required="required"
+			             pattern=".{5,}"></textarea></p>
 			<p class="captcha">
 				<button type="submit" id="comment-button">Comment</button>
 			</p>

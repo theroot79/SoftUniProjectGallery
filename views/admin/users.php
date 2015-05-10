@@ -1,4 +1,4 @@
-<div>
+<div class="admin-table">
 	<?php
 
 	if($this->users && is_array($this->users) && count($this->users) > 0){
