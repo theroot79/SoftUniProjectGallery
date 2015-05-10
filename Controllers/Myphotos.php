@@ -14,16 +14,18 @@ class Myphotos extends Base
 
 	public function viewalbum(){
 
-		$this->view->pageTitle = 'User&lsquo;s Albums';
+		$this->view->pageTitle = 'User&lsquo;s Photos';
 
 		$dataAlbums = new Models\Albums();
-		$dataCategories = new Models\Categories();
+		$dataPhotos = new Models\Photos();
 
-		$userid = 0;
-		if(isset($this->view->user['uid'])){
-			$userid = intval($this->view->user['uid']);
+		$userid = $this->requireLogin();
+
+		if($this->input->get(0) && is_numeric($this->input->get(0))){
+			$albumId = $this->input->get(0);
+		}else{
+			@header("Location:/myalbums/");
 		}
-		if($userid < 1)header("Location:/signup/");
 
 		/**
 		 * Actions -->
@@ -36,24 +38,24 @@ class Myphotos extends Base
 			/**
 			 * ADD ALBUM
 			 */
-			if ($this->input->post('action') == 'addalbum') {
+			if ($this->input->post('action') == 'addfile') {
 
-				$albumName = $this->input->post('name');
-				$validate->setRule('alphabetspace',$albumName);
-				$validate->setRule('minlength',$albumName,2,'minlength');
-				$validAlbumName = $validate->validate();
+				$photoName = $this->input->post('name');
+				$validate->setRule('alphabetspace',$photoName);
+				$validate->setRule('minlength',$photoName,2,'minlength');
+				$validPhotoName = $validate->validate();
 
-				if($validAlbumName == true){
+				if($validPhotoName == true){
 
-					$a = $dataAlbums->addAlbum($userid, $albumName);
+					$a = $dataPhotos->addPhoto($userid, $albumId, $photoName, $_FILES);
 					if ($a != false && is_numeric($a)) {
-						$this->AddNoticeMessage('Album - created!');
+						$this->AddNoticeMessage('Photo added!');
 					} else {
-						$this->AddErrorMessage('Failed to add album, maybe already exist!');
+						$this->AddErrorMessage('Failed to add photo, maybe photo with that name already exist!');
 					}
 
 				}else{
-					$this->AddErrorMessage('Add valid Album name ! Must be a word, no special symbols and number.');
+					$this->AddErrorMessage('Add valid Photo name ! Must be a word, no special symbols and number.');
 				}
 			}
 
@@ -64,7 +66,7 @@ class Myphotos extends Base
 		 * Views --->
 		 */
 		$this->view->userAlbums = $dataAlbums->getLatestAlbums($userid);
-		$this->view->userCategories = $dataCategories->getAllCategories();
+		$this->view->userPhotos = $dataPhotos->getPhotosByAlbum($albumId, $userid);
 
 		$this->view->appendToLayout('body','loggedin/my-photos');
 

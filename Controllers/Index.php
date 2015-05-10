@@ -11,10 +11,6 @@ class Index extends Base
 {
 	public function index(){
 
-		//$validate = new Validation();
-		//$validate->setRule('minlength','test',20,'minlength');
-		//var_dump($validate->validate());
-
 		$data = new Models\Photos();
 
 		$this->totalPhotos = $data->getTotalPhotos();
@@ -23,7 +19,6 @@ class Index extends Base
 		$view->title = 'Vasil Tsintsev&lsquo;s Gallery';
 		$view->searchString = '';
 		$view->latestPhotos = $data->getLatestPhotos();
-		$view->photoObj =  new Models\Photo();
 
 
 		$view->appendToLayout('body','index');

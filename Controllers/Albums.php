@@ -14,7 +14,6 @@ class Albums extends Base
 
 		$this->view->totalAlbumss = $data->getTotalAlbums();
 		$this->view->latestAlbums = $data->getLatestAlbums();
-		$this->view->albumObj =  new Models\Album();
 
 		$this->view->appendToLayout('body','albums');
 

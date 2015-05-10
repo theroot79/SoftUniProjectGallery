@@ -22,20 +22,12 @@ class Categories extends DefaultController
 
 	public function index(){
 
-
-
-		$this->totalPhotos = $data->getTotalPhotos();
-
 		$view = View::getInstance();
 		$view->title = 'Vasil Tsintsev&lsquo;s Gallery';
 		$view->searchString = '';
-		$view->latestPhotos = $data->getLatestPhotos();
-		$view->photoObj =  new Models\Photo();
 
 
-		$view->appendToLayout('header','header');
 		$view->appendToLayout('body','index');
-		$view->appendToLayout('footer','footer');
 		$view->display('layouts/default', array('menuName'=>'photos'));
 	}
 }

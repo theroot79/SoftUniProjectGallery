@@ -78,4 +78,15 @@ class Base extends DefaultController{
 		$this->errors.='
 		<div class="backmsg">'.$notice.'</div>';
 	}
+
+	public function requireLogin()
+	{
+		$user = $this->auth->user();
+		$userid = 0;
+		if(isset($user['uid'])){
+			$userid = intval($user['uid']);
+		}
+		if($userid < 1)header("Location:/signup/");
+		return $userid;
+	}
 }

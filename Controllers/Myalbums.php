@@ -14,11 +14,7 @@ class Myalbums extends Base
 		$dataAlbums = new Models\Albums();
 		$dataCategories = new Models\Categories();
 
-		$userid = 0;
-		if(isset($this->view->user['uid'])){
-			$userid = intval($this->view->user['uid']);
-		}
-		if($userid < 1)header("Location:/signup/");
+		$userid = $this->requireLogin();
 
 		/**
 		 * Actions -->
@@ -142,11 +138,7 @@ class Myalbums extends Base
 			@header("Location:/myalbums/");
 		}
 
-		$userid = 0;
-		if(isset($this->view->user['uid'])){
-			$userid = intval($this->view->user['uid']);
-		}
-		if($userid < 1)header("Location:/signup/");
+		$userid = $this->requireLogin();
 
 		/**
 		 * Actions -->
@@ -211,11 +203,7 @@ class Myalbums extends Base
 			@header("Location:/myalbums/");
 		}
 
-		$userid = 0;
-		if(isset($this->view->user['uid'])){
-			$userid = intval($this->view->user['uid']);
-		}
-		if($userid < 1)header("Location:/signup/");
+		$userid = $this->requireLogin();
 
 		/**
 		 * Actions -->
