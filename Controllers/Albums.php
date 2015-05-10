@@ -23,7 +23,6 @@ class Albums extends Base
 			if($this->input->get(0) == 'page' && is_numeric($this->input->get(1))){
 				$this->page = intval($this->input->get(1));
 				if($this->page < 0)$this->page = 0;
-				if($this->page > ($this->total - 1)) $this->page = 0;
 			}
 		}
 

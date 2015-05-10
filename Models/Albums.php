@@ -115,10 +115,13 @@ class Albums extends Main
 	 *
 	 * @return Array|bool
 	 */
-	public function getAlbumsByCategory()
+	public function getAlbumsByCategory($cid = 0, $page = 0, $offset = 10000)
 	{
 
 		$output = array();
+
+		$where = "";
+		if($cid > 0)$where = " WHERE `cid`=:cid ";
 
 		$sql = "SELECT *,
 		             IFNULL(
@@ -133,18 +136,25 @@ class Albums extends Main
 		             IFNULL(
 		                (SELECT COUNT(`cid`) as `comments` FROM `comments` WHERE `comments`.`aid`=`albums`.`aid`),'0')
 		                	AS `comments`
-						FROM `albums` ORDER BY `alllikes` DESC,`alldislikes` ASC,`name` ASC";
+						FROM `albums` {$where} ORDER BY `alllikes` DESC,`alldislikes` ASC,`name` ASC LIMIT :page, :offset";
 
 		$q = $this->prepare($sql);
+		if($cid > 0)$q->bindParam(':cid', $cid);
+		$q->bindParam(':page', $page);
+		$q->bindParam(':offset', $offset);
 		$q->execute();
 
 		$result = $q->fetchAllAssoc();
 
-		if(count($result) > 0){
-			foreach($result as $item){
-				$output[$item['cid']][] = $item;
+		if($cid > 0){
+			return $result;
+		}else {
+			if (count($result) > 0) {
+				foreach ($result as $item) {
+					$output[$item['cid']][] = $item;
+				}
+				return $output;
 			}
-			return $output;
 		}
 
 		return false;

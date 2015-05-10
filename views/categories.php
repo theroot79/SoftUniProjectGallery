@@ -7,12 +7,15 @@ if($this->categories && count($this->categories) > 0){
 
 	foreach($this->categories as $category){
 
-		print '<h2>'.$category['name'].'</h2>';
+
 
 		if(isset($this->albums[$category['cid']]) && is_array($this->albums[$category['cid']]) && count($this->albums[$category['cid']]) > 0){
 
+			print '<h2><a href="/categories/view/'.$category['cid'].'">'.$category['name'].'</a></h2>';
+
 			$albums = $this->albums[$category['cid']];
 
+			$n = 0;
 			foreach($albums as $album){
 
 				$photo = '/assets/img/no-image.jpg';
@@ -32,10 +35,9 @@ if($this->categories && count($this->categories) > 0){
 						<strong class="commentsnum">Comments: '.$album['comments'].'</strong>
 					</div>
 				</div>';
-
+				$n++;
+				if($n > 3)break;
 			}
-		}else{
-			print '<div>No albums in this category!</div>';
 		}
 	}
 
