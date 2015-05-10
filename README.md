@@ -1,5 +1,5 @@
-# ProjectGallery
-Framework Project Gallery
+# Project - Gallery
+PHP Framework (VTF) + Project - Gallery
 
 -------------------------------
 
