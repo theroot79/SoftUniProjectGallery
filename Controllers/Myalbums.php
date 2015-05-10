@@ -122,7 +122,7 @@ class Myalbums extends Base
 		$this->view->appendToLayout('body','loggedin/myalbums');
 
 		$this->view->display('layouts/default',
-			array('menuName' => 'albums', 'errors' => $this->errors));
+			array('menuName' => 'myalbums', 'errors' => $this->errors));
 	}
 
 
@@ -187,7 +187,7 @@ class Myalbums extends Base
 		$this->view->appendToLayout('body','loggedin/edit-albums');
 
 		$this->view->display('layouts/default',
-			array('menuName' => 'albums', 'errors' => $this->errors));
+			array('menuName' => 'myalbums', 'errors' => $this->errors));
 	}
 
 	public function del(){
@@ -236,6 +236,6 @@ class Myalbums extends Base
 		$this->view->appendToLayout('body','loggedin/del-albums');
 
 		$this->view->display('layouts/default',
-			array('menuName' => 'albums', 'errors' => $this->errors));
+			array('menuName' => 'myalbums', 'errors' => $this->errors));
 	}
 }

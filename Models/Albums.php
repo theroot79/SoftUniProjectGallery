@@ -63,6 +63,46 @@ class Albums extends Main
 	}
 
 	/**
+	 * Get a list of the most recent Albums by category
+	 *
+	 * @return Array|bool
+	 */
+	public function getAlbumsByCategory()
+	{
+
+		$output = array();
+
+		$sql = "SELECT *,
+		             IFNULL(
+		                (SELECT `filename` FROM `photos` WHERE `photos`.`aid`=`albums`.`aid`
+		                    ORDER BY `phid` DESC LIMIT 1), '') AS `photo`,
+		             IFNULL(
+		                (SELECT SUM(`likes`) as `alllikes` FROM `votes` WHERE `votes`.`aid`=`albums`.`aid`),'0')
+		                	AS `alllikes`,
+		             IFNULL(
+		                (SELECT SUM(`dislikes`) as `alldislikes` FROM `votes` WHERE `votes`.`aid`=`albums`.`aid`),'0')
+		                	AS `alldislikes`,
+		             IFNULL(
+		                (SELECT COUNT(`cid`) as `comments` FROM `comments` WHERE `comments`.`aid`=`albums`.`aid`),'0')
+		                	AS `comments`
+						FROM `albums` ORDER BY `alllikes` DESC,`alldislikes` ASC,`name` ASC";
+
+		$q = $this->prepare($sql);
+		$q->execute();
+
+		$result = $q->fetchAllAssoc();
+
+		if(count($result) > 0){
+			foreach($result as $item){
+				$output[$item['cid']][] = $item;
+			}
+			return $output;
+		}
+
+		return false;
+	}
+
+	/**
 	 * Returns single album data.
 	 *
 	 * @param int $aid

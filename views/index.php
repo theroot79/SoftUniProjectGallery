@@ -13,7 +13,7 @@ if(is_array($this->latestPhotos)) {
 			</a>
 			<div class="p-photos-inf">
 				<strong class="p-photos-name">' . $photo['name'] . '</strong>
-				<strong class="p-photos-author">by Author (<a href="/album/' . $photo['aid'] . '/" >link</a>)</strong>
+				<strong class="p-photos-author">from Album (<a href="/album/view/' . $photo['aid'] . '/" >link</a>)</strong>
 				<em class="p-photos-date">' . substr($photo['created'], 0, 10) . '</em>
 			</div>
 		</div>';

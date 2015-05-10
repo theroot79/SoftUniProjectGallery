@@ -10,7 +10,7 @@ foreach ($this->latestAlbums as $album){
 
 	print '
 	<div class="album-block">
-		<a href="/album/'.$album['aid'].'/" class="aimgi">
+		<a href="/album/view/'.$album['aid'].'/" class="aimgi">
 			<img src="'.$photo.'" alt="'.$album['name'].'"/>
 		</a>
 		<div class="albums-inf">

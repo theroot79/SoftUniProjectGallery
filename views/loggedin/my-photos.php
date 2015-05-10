@@ -23,7 +23,7 @@
 					</a>
 					<div class="photos-manage-btns">
 						<strong>'.$photo['name'].'</strong>
-						<a href="/myphotos/del/90/">delete</a>
+						<a href="/myphotos/del/'.$photo['phid'].'" onclick="return config(\'Are you sure?\')">delete</a>
 					</div>
 				</div>';
 			}

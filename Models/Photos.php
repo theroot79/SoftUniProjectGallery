@@ -101,6 +101,35 @@ class Photos extends Main
 		return false;
 	}
 
+	public function delPhoto($uid, $phid)
+	{
+		$inpath = '../public/photos/' . $uid;
+
+		$sql = "SELECT * FROM `photos` WHERE `phid` = :phid AND `uid` = :uid ";
+
+		$q = $this->prepare($sql);
+		$q->bindParam(':phid', $phid);
+		$q->bindParam(':uid', $uid);
+		$q->execute();
+
+		$photo = $q->fetchAllAssoc();
+
+		if ($photo && count($photo) > 0) {
+			$photo = $photo[0];
+
+			$q = $this->prepare("DELETE FROM `photos` WHERE `phid` = :phid");
+			$q->bindParam(':phid', $photo['phid']);
+			$q->execute();
+			$result = $q->getAffectedRows();
+			if ($result >= 0) {
+				@unlink($inpath.'/'.$photo['filename']);
+				@unlink($inpath.'/t_'.$photo['filename']);
+				return $photo['aid'];
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Generate unique string.
 	 *

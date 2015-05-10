@@ -7,27 +7,23 @@ use VTF\Validation;
 use VTF\View;
 use Models;
 
-class Categories extends DefaultController
+class Categories extends Base
 {
-
-	private $dataAlbums;
-	private $dataPhotos;
-
-	public function __construct(){
-
-		$this->dataAlbums = new Models\Albums();
-		$this->dataPhotos = new Models\Photos();
-
-	}
 
 	public function index(){
 
-		$view = View::getInstance();
-		$view->title = 'Vasil Tsintsev&lsquo;s Gallery';
-		$view->searchString = '';
+		$this->view->pageTitle = 'Categories';
 
+		$dataCategories = new Models\Categories();
+		$dataAlbums = new Models\Albums();
 
-		$view->appendToLayout('body','index');
-		$view->display('layouts/default', array('menuName'=>'photos'));
+		$this->view->categories = $dataCategories->getAllCategories();
+
+		$this->view->albums = $dataAlbums->getAlbumsByCategory();
+
+		$this->view->appendToLayout('body','categories');
+
+		$this->view->display('layouts/default',
+			array('menuName' => 'categories', 'errors' => $this->errors));
 	}
 }
