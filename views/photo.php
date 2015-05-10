@@ -1,5 +1,8 @@
 <div id="viewphoto">
-	<h1 class="viewphoto-album-name"><?php print $this->photo['name'];?></h1>
+	<h1 class="viewphoto-album-name">
+		<a href="/dwl.php?f=<?php print urlencode($this->photo['uid'].'/'.$this->photo['filename']);?>"
+		   target="_blank"><?php print $this->photo['name'];?></a>
+	</h1>
 
 	<div id="view-photo-blk">
 		<div id="p-photos-block">
