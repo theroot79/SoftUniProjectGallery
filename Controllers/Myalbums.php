@@ -30,7 +30,7 @@ class Myalbums extends Base
 			if ($this->input->post('action') == 'addalbum') {
 
 				$albumName = $this->input->post('name');
-				$validate->setRule('alphabetspace',$albumName);
+				$validate->setRule('alphabetspacenum',$albumName);
 				$validate->setRule('minlength',$albumName,2,'minlength');
 				$validAlbumName = $validate->validate();
 
@@ -116,7 +116,7 @@ class Myalbums extends Base
 		/**
 		 * Views --->
 		 */
-		$this->view->userAlbums = $dataAlbums->getLatestAlbums($userid);
+		$this->view->userAlbums = $dataAlbums->getLatestAlbums($userid, 0, 500);
 		$this->view->userCategories = $dataCategories->getAllCategories();
 
 		$this->view->appendToLayout('body','loggedin/myalbums');

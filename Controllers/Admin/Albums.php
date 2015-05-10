@@ -11,6 +11,8 @@ class Albums extends \Controllers\Base
 
 		$this->view->pageTitle = 'Admin - Manage Albums';
 
+		$this->requireAdmin();
+
 		$dataAlbums = new Models\Albums();
 		$dataCategories = new Models\Categories();
 		$user = $this->auth->user();

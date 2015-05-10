@@ -85,6 +85,11 @@ class Validation
 		return (bool) preg_match('/^[a-zA-Z\p{Cyrillic}\s]{1,1000}$/u', $val);
 	}
 
+	public static function alphabetspacenum($val)
+	{
+		return (bool) preg_match('/^[a-zA-Z\p{Cyrillic}0-9\s]{1,1000}$/u', $val);
+	}
+
 	public static function alphanum($val)
 	{
 		return (bool) preg_match('/^(a-z0-9)+$/i', $val);

@@ -26,4 +26,9 @@ foreach ($this->latestAlbums as $album){
 
 ?>
 	</div>
+	<?php
+	if($this->latestAlbums && is_array($this->latestAlbums) && count($this->latestAlbums) > 0){
+		print $this->paging;
+	}
+	?>
 </div>

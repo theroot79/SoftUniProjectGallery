@@ -6,7 +6,7 @@
 		<nav id="menu">
 			<ul id="nav-menu">
 				<li id="nav-photos" <?php if($this->menuName == 'photos') print 'class="active"';?>><a href="/gallery/view/">Photos</a></li>
-				<li id="nav-albums" <?php if($this->menuName == 'albums') print 'class="active"';?>><a href="/albums/">Albums</a></li>
+				<li id="nav-albums" <?php if($this->menuName == 'albums') print 'class="active"';?>><a href="/albums/view/">Albums</a></li>
 				<li id="nav-categories" <?php if($this->menuName == 'categories') print 'class="active"';?>><a href="/categories/">By Category</a></li>
 
 				<?php

@@ -13,6 +13,8 @@ class Index extends \Controllers\Base
 
 		$this->view->pageTitle = 'Administration page';
 
+		$this->requireAdmin();
+
 		$this->view->appendToLayout('body','admin/index');
 
 		$this->view->display('layouts/admin',
