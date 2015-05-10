@@ -8,7 +8,7 @@ use \Lib\Paging;
 class Albums extends Base
 {
 	public function index(){
-		header("Location:/albums/view");
+		@header("Location:/albums/view");
 	}
 
 	public function view(){
@@ -27,7 +27,6 @@ class Albums extends Base
 			}
 		}
 
-
 		$this->view->latestAlbums = $dataAlbums->getLatestAlbums(0,$this->page,$this->offset);
 
 		$paging = '';
@@ -35,7 +34,6 @@ class Albums extends Base
 			$pagingObj = new Paging();
 			$paging = $pagingObj->display($this->total,$this->page, $this->offset,'/albums/view');
 		}
-
 
 		$this->view->appendToLayout('body','albums');
 

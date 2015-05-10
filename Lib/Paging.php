@@ -2,12 +2,24 @@
 
 namespace Lib;
 
-use \VTF\Db;
-
-
+/**
+ * Creates paging on the website.
+ *
+ * Class Paging
+ * @package Lib
+ */
 class Paging
 {
 
+	/**
+	 * Website paging.
+	 *
+	 * @param $total
+	 * @param $page
+	 * @param $offset
+	 * @param string $baseURL
+	 * @return string
+	 */
 	public function display($total, $page, $offset, $baseURL = '')
 	{
 		$result = '';
@@ -44,6 +56,5 @@ class Paging
 		}
 
 		return $result;
-
 	}
 }
