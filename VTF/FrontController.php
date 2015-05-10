@@ -100,7 +100,10 @@ class FrontController
 			$this->controller = strtolower($urlBase[0]);
 			if (isset($urlBase[1]) && !empty($urlBase[1])) {
 				$this->method = strtolower($urlBase[1]);
-				$inputInst->setGet(array_values($urlBase[2]));
+				$tempUrlBase = $urlBase;
+				unset($tempUrlBase[0]);
+				unset($tempUrlBase[1]);
+				$inputInst->setGet(array_values($tempUrlBase));
 			} else {
 				$this->method = $this->getDefaultMethod();
 			}

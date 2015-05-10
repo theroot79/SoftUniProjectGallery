@@ -96,6 +96,7 @@ class Auth{
 		if(is_array($result) && count($result) > 0){
 			$result = $result[0];
 			if (is_array($result) && isset($result['state']) && ($result['state'] == 0)) {
+				unset($result['password']);
 				self::$user = $result;
 				$this->app->getSession()->user = $result;
 				return $result;

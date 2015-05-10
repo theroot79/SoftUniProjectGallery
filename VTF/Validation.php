@@ -80,6 +80,11 @@ class Validation
 		return (bool) preg_match('/^[a-zа-Я]{1,1000}$/i', $val);
 	}
 
+	public static function alphabetspace($val)
+	{
+		return (bool) preg_match('/^[a-zа-Я\s]{1,1000}$/i', $val);
+	}
+
 	public static function alphanum($val)
 	{
 		return (bool) preg_match('/^(a-z0-9)+$/i', $val);

@@ -1,10 +1,11 @@
-#new-album{
-	width:930px;
-	min-height:170px;
-	padding:35px;
+#new-album-category{
+	width:950px;
+	min-height:120px;
+	padding:25px;
 	background-color:#F16C65;
 }
-#new-album h1{
+#new-album-form h1,
+#new-category-form h1{
 	display:block;
 	width:100%;
 	line-height:1.1;
@@ -12,6 +13,46 @@
 	font-size:1.86em;
 	font-weight:normal;
 	text-align:center;
+}
+#new-album-form .frm,
+#new-category-form .frm{
+	min-height: 100px;
+}
+
+#new-album-form .frm input,
+#new-album-form .frm select,
+#new-category-form .frm input,
+#new-category-form .frm select{
+	display:inline-block;
+	width:210px;
+	padding:8px 11px;
+	margin-right:18px;
+	color:#FAB4B0;
+	border:0;
+	border-radius:5px 5px 5px 5px;
+	background-color:#d75650;
+	font-size:1.1em;
+}
+#new-album-form .frm select,
+#new-category-form .frm select{
+	width:300px;
+	padding:7px 11px;
+	cursor:pointer;
+}
+
+#new-album-form .frm button,
+#new-category-form .frm button{
+	display:inline-block;
+	padding:7px 18px;
+	line-height:1;
+	margin-top:12px;
+	color:#FFFFFF;
+	border:1px solid #FFFFFF;
+	border-radius:6px;
+	background-color:#F16C65;
+	font-size:1.13em;
+	text-decoration:none;
+	cursor:pointer;
 }
 
 #edit-album{

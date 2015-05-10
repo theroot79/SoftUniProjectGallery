@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="/assets/css/public.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/assets/css/responsive.css" type="text/css" media="all" />
 	<link rel="stylesheet" href="/assets/css/print.css" type="text/css" media="print" />
+	<script type="text/javascript" src="/assets/js/jquery-1.10.2.min.js?v=1426599783"></script>
+	<script type="text/javascript" src="/assets/js/gallery.js"></script>
 </head>
 <body data-layout="default">
 	<div id="wrapper">

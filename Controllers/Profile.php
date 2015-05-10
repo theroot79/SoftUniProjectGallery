@@ -47,7 +47,11 @@ class Profile extends Base
 					if ($u != false && $u >= 0) {
 						@header("Location:/profile/");
 					} else {
-						$this->AddErrorMessage($u);
+						if($u == 0) {
+							$this->AddNoticeMessage('No changes made.');
+						}else{
+							$this->AddErrorMessage($u);
+						}
 					}
 				}else{
 					if($validFname == false)$this->AddErrorMessage('Please enter valid First Name!');
@@ -57,7 +61,7 @@ class Profile extends Base
 			}
 		}
 
-		$this->view->appendToLayout('body','profile');
+		$this->view->appendToLayout('body','loggedin/profile');
 
 		$this->view->display('layouts/default',
 			array('menuName'=>'singup','var' => $this->view, 'errors' => $this->errors));
